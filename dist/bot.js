@@ -43,16 +43,22 @@ bot.command("add_channel", (ctx) => __awaiter(void 0, void 0, void 0, function* 
         ctx.reply('Wrong author');
         return;
     }
-    const chatMember = yield ctx.api.getChatMember(chatId, userId);
-    if (chatMember.status != 'administrator' && chatMember.status != 'creator') {
-        ctx.reply('You are not admin');
-        return;
+    let chatMember;
+    try {
+        chatMember = yield ctx.api.getChatMember(chat.id, userId);
+        if (chatMember.status != 'administrator' && chatMember.status != 'creator') {
+            ctx.reply('You are not admin');
+            return;
+        }
+        UserChat_1.UserChat.create({
+            chat_id: chatId,
+            user_id: userId
+        });
+        ctx.reply('You successfully save channel');
     }
-    UserChat_1.UserChat.create({
-        chat_id: chatId,
-        user_id: userId
-    });
-    ctx.reply('You successfully save channel');
+    catch (errr) {
+        console.log(yield ctx.api.getChatAdministrators(chat.id));
+    }
     return true;
 }));
 // Now that you specified how to handle messages, you can start your bot.
