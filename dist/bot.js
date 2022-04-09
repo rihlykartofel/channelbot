@@ -11,7 +11,7 @@ const bot = new grammy_1.Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); 
 bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
 // Handle other messages.
 // bot.on("message", (ctx) => ctx.reply("Got another message!"));
-bot.command("add_channel", (ctx) => { var _a, _b; return ctx.reply((_b = (_a = ctx.message) === null || _a === void 0 ? void 0 : _a.text.substring('/add_channel'.length)) !== null && _b !== void 0 ? _b : ''); });
+bot.command("add_channel", (ctx) => { var _a, _b; return ctx.reply((_b = (_a = ctx.message) === null || _a === void 0 ? void 0 : _a.text.split(' ', 2)[1]) !== null && _b !== void 0 ? _b : ''); });
 // Now that you specified how to handle messages, you can start your bot.
 // This will connect to the Telegram servers and wait for messages.
 // Start the bot.
