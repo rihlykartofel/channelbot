@@ -8,13 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a;
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 const grammy_1 = require("grammy");
 const sequelize_1 = require("sequelize");
 const UserChat_model_1 = require("./database/models/UserChat.model");
 // Create an instance of the `Bot` class and pass your authentication token to it.
-const bot = new grammy_1.Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); // <-- put your authentication token between the ""
+const bot = new grammy_1.Bot((_a = process.env.TOKEN) !== null && _a !== void 0 ? _a : ''); // <-- put your authentication token between the ""
 // You can now register listeners on your bot object `bot`.
 // grammY will call the listeners when users send messages to your bot.
 // Handle the /start command.
@@ -22,8 +22,8 @@ bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
 // Handle other messages.
 // bot.on("message", (ctx) => ctx.reply("Got another message!"));
 bot.command("add_channel", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c;
-    const chatNickname = (_b = ctx.message) === null || _b === void 0 ? void 0 : _b.text.split(' ', 2)[1];
+    var _c, _d;
+    const chatNickname = (_c = ctx.message) === null || _c === void 0 ? void 0 : _c.text.split(' ', 2)[1];
     if (!chatNickname) {
         ctx.reply('Wrong channel name');
         return;
@@ -37,7 +37,7 @@ bot.command("add_channel", (ctx) => __awaiter(void 0, void 0, void 0, function* 
         ctx.reply('Wrong channel type');
         return;
     }
-    const userId = (_c = ctx.from) === null || _c === void 0 ? void 0 : _c.id;
+    const userId = (_d = ctx.from) === null || _d === void 0 ? void 0 : _d.id;
     const chatId = chat.id;
     if (!userId) {
         ctx.reply('Wrong author');
@@ -65,7 +65,7 @@ bot.command("add_channel", (ctx) => __awaiter(void 0, void 0, void 0, function* 
 // Now that you specified how to handle messages, you can start your bot.
 // This will connect to the Telegram servers and wait for messages.
 // Start the bot.
-const sequelize = new sequelize_1.Sequelize((_a = process.env.DATABASE_URL) !== null && _a !== void 0 ? _a : '', {
+const sequelize = new sequelize_1.Sequelize((_b = process.env.DATABASE_URL) !== null && _b !== void 0 ? _b : '', {
     dialectOptions: {
         ssl: {
             require: true,
@@ -81,4 +81,5 @@ sequelize
     .catch(err => {
     console.error('Unable to connect to the database:', err);
 });
-bot.start();
+sequelize.
+    bot.start();

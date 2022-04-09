@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
 import { UserChat } from "./database/models/UserChat.model";
 
 // Create an instance of the `Bot` class and pass your authentication token to it.
-const bot = new Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); // <-- put your authentication token between the ""
+const bot = new Bot(process.env.TOKEN ?? ''); // <-- put your authentication token between the ""
 
 // You can now register listeners on your bot object `bot`.
 // grammY will call the listeners when users send messages to your bot.
@@ -93,4 +93,6 @@ sequelize
         console.error('Unable to connect to the database:', err);
     });
 
-bot.start();
+sequelize.
+
+    bot.start();
