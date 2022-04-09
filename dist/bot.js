@@ -38,18 +38,18 @@ bot.command("add_channel", (ctx) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     const userId = (_c = ctx.from) === null || _c === void 0 ? void 0 : _c.id;
-    const chatId = ctx.chat.id;
+    const chatId = chat.id;
     if (!userId) {
         ctx.reply('Wrong author');
         return;
     }
     const chatMember = yield ctx.api.getChatMember(chatId, userId);
-    if (chatMember.status !== 'administrator' && chatMember.status !== 'creator') {
+    if (chatMember.status != 'administrator' && chatMember.status != 'creator') {
         ctx.reply('You are not admin');
         return;
     }
     UserChat_1.UserChat.create({
-        chat_id: ctx.chat.id,
+        chat_id: chatId,
         user_id: userId
     });
     ctx.reply('You successfully save channel');

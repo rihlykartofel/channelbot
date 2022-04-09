@@ -35,7 +35,7 @@ bot.command("add_channel", async (ctx) => {
     }
 
     const userId = ctx.from?.id;
-    const chatId = ctx.chat.id;
+    const chatId = chat.id;
 
     if (!userId) {
         ctx.reply('Wrong author');
@@ -44,13 +44,13 @@ bot.command("add_channel", async (ctx) => {
 
     const chatMember = await ctx.api.getChatMember(chatId, userId);
 
-    if (chatMember.status !== 'administrator' && chatMember.status !== 'creator') {
+    if (chatMember.status != 'administrator' && chatMember.status != 'creator') {
         ctx.reply('You are not admin');
         return;
     }
 
     UserChat.create({
-        chat_id: ctx.chat.id,
+        chat_id: chatId,
         user_id: userId
     });
 
