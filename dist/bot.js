@@ -1,8 +1,18 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const grammy_1 = require("grammy");
 const sequelize_1 = require("sequelize");
+const UserChat_1 = require("./database/models/UserChat");
 // Create an instance of the `Bot` class and pass your authentication token to it.
 const bot = new grammy_1.Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); // <-- put your authentication token between the ""
 // You can now register listeners on your bot object `bot`.
@@ -11,7 +21,33 @@ const bot = new grammy_1.Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); 
 bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
 // Handle other messages.
 // bot.on("message", (ctx) => ctx.reply("Got another message!"));
-bot.command("add_channel", (ctx) => { var _a, _b; return ctx.reply((_b = (_a = ctx.message) === null || _a === void 0 ? void 0 : _a.text.split(' ', 2)[1]) !== null && _b !== void 0 ? _b : 'null'); });
+bot.command("add_channel", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b, _c;
+    const chatNickname = (_b = ctx.message) === null || _b === void 0 ? void 0 : _b.text.split(' ', 2)[1];
+    if (!chatNickname) {
+        ctx.reply('Wrong channel name');
+        return;
+    }
+    if (!(/^@[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*$/.test(chatNickname))) {
+        ctx.reply('Wrong channel name');
+        return;
+    }
+    const chat = yield ctx.api.getChat(chatNickname);
+    if (chat.type != 'channel') {
+        ctx.reply('Wrong channel type');
+        return;
+    }
+    const userId = (_c = ctx.from) === null || _c === void 0 ? void 0 : _c.id;
+    if (!userId) {
+        ctx.reply('Wrong author');
+        return;
+    }
+    const userChatRow = UserChat_1.UserChat.create({
+        chat_id: ctx.chat.id,
+        user_id: userId
+    });
+    return true;
+}));
 // Now that you specified how to handle messages, you can start your bot.
 // This will connect to the Telegram servers and wait for messages.
 // Start the bot.

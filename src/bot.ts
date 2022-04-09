@@ -1,5 +1,6 @@
 import { Bot } from "grammy";
 import { Sequelize } from "sequelize";
+import { UserChat } from "./database/models/UserChat";
 
 // Create an instance of the `Bot` class and pass your authentication token to it.
 const bot = new Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); // <-- put your authentication token between the ""
@@ -12,7 +13,42 @@ bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
 // Handle other messages.
 // bot.on("message", (ctx) => ctx.reply("Got another message!"));
 
-bot.command("add_channel", (ctx) => ctx.reply(ctx.message?.text.split(' ', 2)[1] ?? 'null'));
+bot.command("add_channel", async (ctx) => {
+
+    const chatNickname = ctx.message?.text.split(' ', 2)[1];
+
+    if (!chatNickname) {
+        ctx.reply('Wrong channel name');
+        return;
+    }
+
+    if (!(/^@[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*$/.test(chatNickname))) {
+        ctx.reply('Wrong channel name');
+        return;
+    }
+
+    const chat = await ctx.api.getChat(chatNickname);
+
+    if (chat.type != 'channel') {
+        ctx.reply('Wrong channel type');
+        return;
+    }
+
+    const userId = ctx.from?.id;
+
+    if (!userId) {
+        ctx.reply('Wrong author');
+        return;
+    }
+
+    const userChatRow = UserChat.create({
+        chat_id: ctx.chat.id,
+        user_id: userId
+    });
+
+    return true;
+
+});
 
 // Now that you specified how to handle messages, you can start your bot.
 // This will connect to the Telegram servers and wait for messages.
