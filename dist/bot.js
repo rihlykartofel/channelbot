@@ -50,16 +50,16 @@ bot.command("add_channel", (ctx) => __awaiter(void 0, void 0, void 0, function* 
             ctx.reply('You are not admin');
             return;
         }
-        UserChat_model_1.UserChat.create({
-            chat_id: chatId,
-            user_id: userId
-        });
-        ctx.reply('You successfully save channel');
     }
     catch (errr) {
         ctx.reply('Probably bot not in this channel');
         return;
     }
+    UserChat_model_1.UserChat.create({
+        chat_id: chatId,
+        user_id: userId
+    });
+    ctx.reply('You successfully save channel');
     return true;
 }));
 // Now that you specified how to handle messages, you can start your bot.

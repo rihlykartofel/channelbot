@@ -51,18 +51,19 @@ bot.command("add_channel", async (ctx) => {
             ctx.reply('You are not admin');
             return;
         }
-
-        UserChat.create({
-            chat_id: chatId,
-            user_id: userId
-        });
-
-        ctx.reply('You successfully save channel');
-
     } catch (errr) {
         ctx.reply('Probably bot not in this channel');
         return;
     }
+
+    UserChat.create({
+        chat_id: chatId,
+        user_id: userId
+    });
+
+    ctx.reply('You successfully save channel');
+
+
 
     return true;
 
