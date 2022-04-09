@@ -10,7 +10,7 @@ const bot = new Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); // <-- pu
 // Handle the /start command.
 bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
 // Handle other messages.
-bot.on("message", (ctx) => ctx.reply("Got another message!"));
+// bot.on("message", (ctx) => ctx.reply("Got another message!"));
 
 bot.command("add_channel", (ctx) => ctx.reply(ctx.message?.text ?? ''));
 
