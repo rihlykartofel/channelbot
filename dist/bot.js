@@ -12,7 +12,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const grammy_1 = require("grammy");
 const sequelize_1 = require("sequelize");
-const UserChat_1 = require("./database/models/UserChat");
+const UserChat_model_1 = require("./database/models/UserChat.model");
 // Create an instance of the `Bot` class and pass your authentication token to it.
 const bot = new grammy_1.Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); // <-- put your authentication token between the ""
 // You can now register listeners on your bot object `bot`.
@@ -50,14 +50,15 @@ bot.command("add_channel", (ctx) => __awaiter(void 0, void 0, void 0, function* 
             ctx.reply('You are not admin');
             return;
         }
-        UserChat_1.UserChat.create({
+        UserChat_model_1.UserChat.create({
             chat_id: chatId,
             user_id: userId
         });
         ctx.reply('You successfully save channel');
     }
     catch (errr) {
-        console.log(yield ctx.api.getChatAdministrators(chat.id));
+        ctx.reply('Probably bot not in this channel');
+        return;
     }
     return true;
 }));

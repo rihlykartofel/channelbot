@@ -1,6 +1,6 @@
 import { Bot } from "grammy";
 import { Sequelize } from "sequelize";
-import { UserChat } from "./database/models/UserChat";
+import { UserChat } from "./database/models/UserChat.model";
 
 // Create an instance of the `Bot` class and pass your authentication token to it.
 const bot = new Bot("5110816886:AAF8wLylhLQpyVPZxjKE6Hm8frrj4lZwNVg"); // <-- put your authentication token between the ""
@@ -47,7 +47,6 @@ bot.command("add_channel", async (ctx) => {
     try {
         chatMember = await ctx.api.getChatMember(chat.id, userId);
 
-
         if (chatMember.status != 'administrator' && chatMember.status != 'creator') {
             ctx.reply('You are not admin');
             return;
@@ -61,7 +60,8 @@ bot.command("add_channel", async (ctx) => {
         ctx.reply('You successfully save channel');
 
     } catch (errr) {
-        console.log(await ctx.api.getChatAdministrators(chat.id));
+        ctx.reply('Probably bot not in this channel');
+        return;
     }
 
     return true;
