@@ -74,6 +74,23 @@ bot.command("add_channel", async (ctx) => {
 
 });
 
+bot.command("add_channel", async ctx => {
+
+    const chahts = await UserChat.findAll({
+        where: {
+            user_id: ctx.from!.id
+        },
+        attributes: ['chat_id']
+    });
+
+    const text = ctx.message?.text.split(' ', 2)[1];
+
+    for (const chat of chahts) {
+        await ctx.api.sendMessage(chat.id, text ?? 'hello world');
+    }
+
+});
+
 const sequelize = new Sequelize(process.env.DATABASE_URL ?? '', {
     dialectOptions: {
         ssl: {
