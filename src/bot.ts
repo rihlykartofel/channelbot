@@ -2,8 +2,10 @@ import express from "express";
 import { Bot, webhookCallback } from "grammy";
 import { Sequelize } from "sequelize";
 import { UserChat } from "./database/models/UserChat.model";
+import { config } from "dotenv";
+import { resolve } from "path";
 
-// Create an instance of the `Bot` class and pass your authentication token to it.
+config({ path: resolve(__dirname, "../.env") })
 
 const bot = new Bot(process.env.TOKEN ?? ''); // <-- put your authentication token between the ""
 const server = express();
