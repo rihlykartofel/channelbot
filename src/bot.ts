@@ -2,12 +2,8 @@ import express from "express";
 import { Bot, webhookCallback } from "grammy";
 import { Sequelize } from "sequelize";
 import { UserChat } from "./database/models/UserChat.model";
-import { config } from "dotenv";
-import { resolve } from "path";
 
-config({ path: resolve(__dirname, "../.env") })
-
-const bot = new Bot(process.env.TOKEN ?? ''); // <-- put your authentication token between the ""
+const bot = new Bot(process.env.TOKEN!); // <-- put your authentication token between the ""
 const server = express();
 bot.api.setWebhook('https://lynchestock.herokuapp.com/');
 
