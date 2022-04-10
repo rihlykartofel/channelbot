@@ -1,6 +1,6 @@
 import express from "express";
 import { Bot, webhookCallback } from "grammy";
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 import { UserChat } from "./database/models/UserChat.model";
 
 const bot = new Bot(process.env.TOKEN!); // <-- put your authentication token between the ""
@@ -60,10 +60,16 @@ bot.command("add_channel", async (ctx) => {
         return;
     }
 
-    UserChat.create({
-        chat_id: chatId,
-        user_id: userId
-    });
+    try {
+        UserChat.create({
+            chat_id: chatId,
+            user_id: userId
+        });
+    } catch (err) {
+        console.log('database error');
+    }
+
+
 
     ctx.reply('You successfully save channel');
 
@@ -92,3 +98,4 @@ sequelize
         console.error('Unable to connect to the database:', err);
     });
 
+sequelize.addModels([UserChat]);
