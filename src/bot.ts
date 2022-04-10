@@ -46,11 +46,6 @@ bot.command("add_channel", async (ctx) => {
         return;
     }
 
-    console.log(userId);
-    console.log(chat.username);
-    console.log(chat.id);
-    console.log(chatId);
-
     let chatMember;
     try {
         chatMember = await ctx.api.getChatMember(chatId, userId);
@@ -65,8 +60,7 @@ bot.command("add_channel", async (ctx) => {
     }
 
     try {
-
-        UserChat.create({
+        await UserChat.create({
             chat_id: chatId,
             user_id: userId
         });
@@ -75,12 +69,6 @@ bot.command("add_channel", async (ctx) => {
     } catch (err) {
         console.log('database error');
     }
-
-
-
-
-
-
 
     return true;
 
