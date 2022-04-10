@@ -74,7 +74,7 @@ bot.command("add_channel", async (ctx) => {
 
 });
 
-bot.command("add_channel", async ctx => {
+bot.command("rassylka", async ctx => {
 
     const chahts = await UserChat.findAll({
         where: {
