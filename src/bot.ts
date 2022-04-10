@@ -89,7 +89,7 @@ bot.command("rassylka", async (ctx) => {
     const text = ctx.message?.text.split(' ', 2)[1];
 
     for (const chat of chats) {
-        await ctx.api.sendMessage(chat.id, text ?? 'hello world');
+        await ctx.api.sendMessage(chat.chat_id, text ?? 'hello world');
     }
 });
 
