@@ -76,16 +76,18 @@ bot.command("add_channel", async (ctx) => {
 
 bot.command("rassylka", async (ctx) => {
 
-    const chahts = await UserChat.findAll({
+    const chats = await UserChat.findAll({
         where: {
             user_id: ctx.from!.id
         },
         attributes: ['chat_id']
     });
 
+    console.log(chats);
+
     const text = ctx.message?.text.split(' ', 2)[1];
 
-    for (const chat of chahts) {
+    for (const chat of chats) {
         await ctx.api.sendMessage(chat.id, text ?? 'hello world');
     }
 });
