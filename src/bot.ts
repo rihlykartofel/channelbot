@@ -74,7 +74,7 @@ bot.command("add_channel", async (ctx) => {
 
 });
 
-bot.command("rassylka", async ctx => {
+bot.command("rassylka", async (ctx) => {
 
     const chahts = await UserChat.findAll({
         where: {
@@ -88,7 +88,6 @@ bot.command("rassylka", async ctx => {
     for (const chat of chahts) {
         await ctx.api.sendMessage(chat.id, text ?? 'hello world');
     }
-
 });
 
 const sequelize = new Sequelize(process.env.DATABASE_URL ?? '', {
