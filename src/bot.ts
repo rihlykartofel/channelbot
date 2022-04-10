@@ -5,7 +5,7 @@ import { UserChat } from "./database/models/UserChat.model";
 
 const bot = new Bot(process.env.TOKEN!); // <-- put your authentication token between the ""
 const server = express();
-bot.api.setWebhook('https://lynchestock.herokuapp.com/');
+bot.api.setWebhook('https://lynchestock.herokuapp.com/' + process.env.TOKEN!);
 
 server.use(express.json());
 server.use(webhookCallback(bot, "express"))
