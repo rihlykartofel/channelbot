@@ -3,14 +3,14 @@ import { Bot, webhookCallback } from "grammy";
 import { Sequelize } from "sequelize";
 import { UserChat } from "./database/models/UserChat.model";
 
-const bot = new Bot(process.env.TOKEN!); // <-- put your authentication token between the ""
+const bot = new Bot('5110816886:AAE-xead4hpq_-YBNFig4G4Y9Qef7aen2R4'); // <-- put your authentication token between the ""
 const server = express();
 bot.api.setWebhook('https://lynchestock.herokuapp.com/');
 
 server.use(express.json());
 server.use(webhookCallback(bot, "express"))
 
-server.listen(process.env.PORT);
+server.listen(5000);
 
 
 
@@ -73,7 +73,7 @@ bot.command("add_channel", async (ctx) => {
 
 });
 
-const sequelize = new Sequelize(process.env.DATABASE_URL ?? '', {
+const sequelize = new Sequelize('postgres://xlszknkpngdwyd:3fc7b93d09ab92b1071763284946b6abd35631fe48e4e1c798bf44502e2ed6ac@ec2-52-18-116-67.eu-west-1.compute.amazonaws.com:5432/desvn1k68e4r1v', {
     dialectOptions: {
         ssl: {
             require: true,
