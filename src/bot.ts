@@ -66,8 +66,8 @@ bot.command("add_channel", async (ctx) => {
         });
 
         ctx.reply('You successfully save channel');
-    } catch (err) {
-        console.log('database error');
+    } catch (err: any) {
+        console.log(err.message);
     }
 
     return true;
