@@ -1,17 +1,23 @@
-import { Bot } from "grammy";
+import express from "express";
+import { Bot, webhookCallback } from "grammy";
 import { Sequelize } from "sequelize";
 import { UserChat } from "./database/models/UserChat.model";
 
 // Create an instance of the `Bot` class and pass your authentication token to it.
+
 const bot = new Bot(process.env.TOKEN ?? ''); // <-- put your authentication token between the ""
+const server = express();
+bot.api.setWebhook('https://lynchestock.herokuapp.com/');
 
-// You can now register listeners on your bot object `bot`.
-// grammY will call the listeners when users send messages to your bot.
+server.use(express.json());
+server.use(webhookCallback(bot, "express"))
 
-// Handle the /start command.
+server.listen(process.env.PORT);
+
+
+
+
 bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
-// Handle other messages.
-// bot.on("message", (ctx) => ctx.reply("Got another message!"));
 
 bot.command("add_channel", async (ctx) => {
 
@@ -69,11 +75,6 @@ bot.command("add_channel", async (ctx) => {
 
 });
 
-// Now that you specified how to handle messages, you can start your bot.
-// This will connect to the Telegram servers and wait for messages.
-
-// Start the bot.
-
 const sequelize = new Sequelize(process.env.DATABASE_URL ?? '', {
     dialectOptions: {
         ssl: {
@@ -93,6 +94,3 @@ sequelize
         console.error('Unable to connect to the database:', err);
     });
 
-sequelize.
-
-    bot.start();
