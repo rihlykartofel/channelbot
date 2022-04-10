@@ -80,7 +80,8 @@ bot.command("rassylka", async (ctx) => {
         where: {
             user_id: ctx.from!.id
         },
-        attributes: ['chat_id']
+        attributes: ['chat_id'],
+        raw: true
     });
 
     console.log(chats);
