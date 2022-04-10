@@ -46,10 +46,14 @@ bot.command("add_channel", async (ctx) => {
         return;
     }
 
+    console.log(userId);
+    console.log(chat.username);
+    console.log(chat.id);
+    console.log(chatId);
 
     let chatMember;
     try {
-        chatMember = await ctx.api.getChatMember(chat.id, userId);
+        chatMember = await ctx.api.getChatMember(chatId, userId);
 
         if (chatMember.status != 'administrator' && chatMember.status != 'creator') {
             ctx.reply('You are not admin');
@@ -61,17 +65,20 @@ bot.command("add_channel", async (ctx) => {
     }
 
     try {
+
         UserChat.create({
             chat_id: chatId,
             user_id: userId
         });
+
+        ctx.reply('You successfully save channel');
     } catch (err) {
         console.log('database error');
     }
 
 
 
-    ctx.reply('You successfully save channel');
+
 
 
 
